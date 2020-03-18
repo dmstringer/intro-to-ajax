@@ -1,5 +1,5 @@
 ;(function () {
-  //
+  // 
   // AJAX stands for Asynchronous JavaScript and XML. Despite the name, this technology
   // has little to do with XML.
   //

@@ -69,8 +69,28 @@
   //    inside of <div id="doggoContainer">. There should be a loop where you click the button,
   //    get a new dog, click the button, get a new dog, etc.
   //
-
   // TODO: your code goes here :)
+
+  $('#generateDoggoBtn').click(clickDoggoBtn)
+  function clickDoggoBtn () {
+    $(this).text("Generating Doggo …");
+    $(this).attr("disabled", "true");
+
+    let imgTag = document.createElement("img");
+    $(imgTag).attr("src", '');
+    $(imgTag).attr("id", 'dogpic');
+    $("#doggoContainer").append(imgTag);
+
+    let dogAPI = "https://dog.ceo/api/breeds/image/random";
+
+    $.getJSON(dogAPI, function(data) {
+      console.log(data.message);
+      $("#dogpic").replaceWith( "<img src='" + data.message + "' id='dogpic'>" );
+      $('#generateDoggoBtn').text("Generate Doggo");
+      $('#generateDoggoBtn').removeAttr("disabled");
+    });
+
+  }
 
   //
   // Cool. Now let's kick it up a notch and allow selecting a specific breed of dog!
