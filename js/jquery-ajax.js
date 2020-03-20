@@ -32,8 +32,6 @@
     $('#jumbotronContainer2').load('jumbotron.html')
     $('#loadBtn2').remove()
   }
-
-  //
   // Pretty simple, right?
   //
   // Next up you will use jQuery AJAX methods to fetch some things from the dog.ceo website.
@@ -68,10 +66,9 @@
   // 7) When the button is clicked again, it should fetch another dog and replace the image
   //    inside of <div id="doggoContainer">. There should be a loop where you click the button,
   //    get a new dog, click the button, get a new dog, etc.
-  //
-  // TODO: your code goes here :)
 
   $('#generateDoggoBtn').click(clickDoggoBtn)
+
   function clickDoggoBtn () {
     $(this).text("Generating Doggo …");
     $(this).attr("disabled", "true");
@@ -84,15 +81,12 @@
     let dogAPI = "https://dog.ceo/api/breeds/image/random";
 
     $.getJSON(dogAPI, function(data) {
-      console.log(data.message);
+      // console.log(data);
       $("#dogpic").replaceWith( "<img src='" + data.message + "' id='dogpic'>" );
       $('#generateDoggoBtn').text("Generate Doggo");
       $('#generateDoggoBtn').removeAttr("disabled");
     });
-
   }
-
-  //
   // Cool. Now let's kick it up a notch and allow selecting a specific breed of dog!
   //
   // 1) Add an empty dropdown menu (ie: <select></select>) to the <div id="selectBreedContainer"> element.
@@ -125,8 +119,39 @@
   //
   //    You should now be able to view random pictures of specific dog breeds via the menu!
   //
-
   // TODO: your code goes here :)
+  let selectTag = document.createElement("select");
+  $(selectTag).attr("id", 'breedSelect');
+  $("#selectBreedContainer").append(selectTag);
+
+  $( document ).ready(function() {
+    // Handler for .ready() called.
+    $.ajax({
+      url: "https://dog.ceo/api/breeds/list",
+    })
+      .done(function(data){
+        // console.log(data);
+        for(let i = 0; i < data.message.length; i++){
+          $('#breedSelect').append('<option value="' + data.message[i] + '">' + data.message[i] + '</option>');
+        }
+      });
+  });
+  
+  $("#breedSelect").on( "change", function() {
+
+    let imgTagTwo = document.createElement("img");
+    $(imgTagTwo).attr("src", '');
+    $(imgTagTwo).attr("id", 'dogpicTwo');
+    $("#selectBreedContainer").append(imgTagTwo);
+
+    let dogSelectAPI = "https://dog.ceo/api/breed/" + this.value + "/images/random";
+
+    $.get(dogSelectAPI, function(data) {
+      console.log(data);
+      $("#dogpicTwo").replaceWith( "<img src='" + data.message + "' id='dogpicTwo'>" );
+    });
+    
+  });
 
   //
   // Excellent work!

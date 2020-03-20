@@ -15,7 +15,7 @@
   //
   // From MDN:
   // The Promise object represents the eventual completion (or failure) of an asynchronous
-  // operation, and its resulting value.
+  // operation, and its resulting value.                          
   //
   // This is a good fit for AJAX since you never really know when an AJAX request will "finish".
   // It may take just a few milliseconds and return as you expect.
