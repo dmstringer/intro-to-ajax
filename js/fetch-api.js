@@ -90,8 +90,42 @@
   //    Don't forget to disable the button while the AJAX request is active, and re-enable
   //    it once done.
   //
-
   // TODO: your code goes here :)
+  const catBtnEl = document.getElementById('generateCatBtn')
+  catBtnEl.addEventListener('click', clickCatBtn)
+
+  let imgTagCat = document.createElement("img");
+  $(imgTagCat).attr("id", 'catpic');
+  $("#catContainer").append(imgTagCat);
+
+  var myHeaders = new Headers({
+    'Content-Type': 'application/json',
+    'x-api-key': '863c597e-678f-4cfe-996c-c9ff2ca6e3b6',
+  });        
+
+  function clickCatBtn () {
+    $(this).text("Generating Cat …");
+    $(this).attr("disabled", "true");
+
+    let catAPI = "https://api.thecatapi.com/v1/images/search?size=full&mime_types=jpg&format=json&has_breeds=1&order=RANDOM&page=0&limit=1";
+
+    fetch(catAPI, {
+      headers: myHeaders,})
+      .then(extractCatText)
+      .then(useTheCatImg);
+  }
+
+  function extractCatText (response) {
+    return response.json() // <-- returns a new Promise object
+  }
+
+  function useTheCatImg (responseTxt) {
+    console.log(responseTxt)
+    $("#catpic").replaceWith( "<img src='" + responseTxt[0].url + "' id='catpic'>" );
+    $('#generateCatBtn').text("Generate Cat");
+    $('#generateCatBtn').removeAttr("disabled");
+  }
+
 
   //
   // What else can you build with your new AJAX knowledge?
